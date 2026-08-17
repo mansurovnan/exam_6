@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Posts | Blog Platform</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+
+            font-family: Arial, sans-serif;
+
+            color: #e2e8f0;
+
+            background:
+                radial-gradient(
+                    circle at top left,
+                    rgba(30, 64, 175, 0.25),
+                    transparent 40%
+                ),
+                #020617;
+        }
+
+        .navbar {
+            height: 75px;
+
+            padding: 0 7%;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            border-bottom: 1px solid #1e293b;
+
+            background: #020617;
+        }
+
+        .logo {
+            color: white;
+
+            font-size: 24px;
+            font-weight: 800;
+        }
+
+        .logo span {
+            color: #3b82f6;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #94a3b8;
+
+            text-decoration: none;
+
+            font-size: 14px;
+        }
+
+        .nav-links a:hover {
+            color: #60a5fa;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+
+            margin: 60px auto;
+        }
+
+        .header {
+            display: flex;
+
+            align-items: center;
+            justify-content: space-between;
+
+            margin-bottom: 35px;
+        }
+
+        .header h1 {
+            color: white;
+
+            font-size: 40px;
+
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #64748b;
+        }
+
+        .create-btn {
+            padding: 13px 20px;
+
+            border-radius: 10px;
+
+            background: #2563eb;
+
+            color: white;
+
+            text-decoration: none;
+
+            font-weight: 700;
+        }
+
+        .create-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fill,
+                    minmax(300px, 1fr)
+                );
+
+            gap: 25px;
+        }
+
+        .card {
+            overflow: hidden;
+
+            background: #0f172a;
+
+            border: 1px solid #1e293b;
+
+            border-radius: 18px;
+
+            transition: 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+
+            border-color: #334155;
+        }
+
+        .post-image {
+            width: 100%;
+            height: 200px;
+
+            object-fit: cover;
+
+            background: #1e293b;
+        }
+
+        .content {
+            padding: 22px;
+        }
+
+        .category {
+            margin-bottom: 10px;
+
+            color: #60a5fa;
+
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .title {
+            margin-bottom: 10px;
+
+            color: white;
+
+            font-size: 22px;
+        }
+
+        .text {
+            margin-bottom: 18px;
+
+            color: #94a3b8;
+
+            line-height: 1.6;
+        }
+
+        .author {
+            margin-bottom: 18px;
+
+            color: #64748b;
+
+            font-size: 13px;
+        }
+
+        .read-btn {
+            color: #60a5fa;
+
+            text-decoration: none;
+
+            font-weight: 700;
+        }
+
+        .read-btn:hover {
+            color: #93c5fd;
+        }
+
+        .empty {
+            padding: 70px;
+
+            text-align: center;
+
+            background: #0f172a;
+
+            border: 1px solid #1e293b;
+
+            border-radius: 18px;
+        }
+
+        .empty h2 {
+            margin-bottom: 10px;
+
+            color: white;
+        }
+
+        .empty p {
+            color: #64748b;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<nav class="navbar">
+
+    <div class="logo">
+        Blog<span>Platform</span>
+    </div>
+
+
+    <div class="nav-links">
+
+        <a href="{% url 'home' %}">
+            Home
+        </a>
+
+        <a href="{% url 'category_list' %}">
+            Categories
+        </a>
+
+        <a href="{% url 'post_list' %}">
+            Posts
+        </a>
+
+        <a href="{% url 'profile' %}">
+            Profile
+        </a>
+
+        <a href="{% url 'logout' %}">
+            Logout
+        </a>
+
+    </div>
+
+</nav>
+
+
+<main class="container">
+
+
+    <div class="header">
+
+        <div>
+
+            <h1>
+                All Posts
+            </h1>
+
+            <p>
+                Discover ideas, stories and knowledge.
+            </p>
+
+        </div>
+
+
+        <a
+            href="{% url 'post_create' %}"
+            class="create-btn"
+        >
+            + Create Post
+        </a>
+
+    </div>
+
+
+    {% if posts %}
+
+
+        <div class="grid">
+
+
+            {% for post in posts %}
+
+
+                <article class="card">
+
+
+                    {% if post.image %}
+
+                        <img
+                            src="{{ post.image.url }}"
+                            alt="{{ post.title }}"
+                            class="post-image"
+                        >
+
+                    {% endif %}
+
+
+                    <div class="content">
+
+
+                        <div class="category">
+
+                            {{ post.category.name }}
+
+                        </div>
+
+
+                        <h2 class="title">
+
+                            {{ post.title }}
+
+                        </h2>
+
+
+                        <p class="text">
+
+                            {{ post.content|truncatewords:25 }}
+
+                        </p>
+
+
+                        <p class="author">
+
+                            By {{ post.author.username }}
+
+                        </p>
+
+
+                        <a
+                            href="{% url 'post_detail' post.pk %}"
+                            class="read-btn"
+                        >
+                            Read More →
+                        </a>
+
+
+                    </div>
+
+
+                </article>
+
+
+            {% endfor %}
+
+
+        </div>
+
+
+    {% else %}
+
+
+        <div class="empty">
+
+            <h2>
+                No posts yet
+            </h2>
+
+            <p>
+                Be the first person to publish a post.
+            </p>
+
+        </div>
+
+
+    {% endif %}
+
+
+</main>
+
+
+</body>
+
+</html>

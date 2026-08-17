@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ category.name }} | Blog Platform</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            color: #e2e8f0;
+
+            background:
+                radial-gradient(
+                    circle at top left,
+                    rgba(30, 64, 175, 0.30),
+                    transparent 40%
+                ),
+                #020617;
+        }
+
+        .navbar {
+            height: 75px;
+            padding: 0 7%;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            background: rgba(2, 6, 23, 0.95);
+            border-bottom: 1px solid #1e293b;
+        }
+
+        .logo {
+            color: white;
+            font-size: 24px;
+            font-weight: 800;
+        }
+
+        .logo span {
+            color: #3b82f6;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .nav-links a:hover {
+            color: #60a5fa;
+        }
+
+        .logout {
+            padding: 9px 17px;
+
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 9px;
+
+            color: #cbd5e1 !important;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 900px;
+
+            margin: 60px auto;
+        }
+
+        .back {
+            display: inline-block;
+
+            margin-bottom: 25px;
+
+            color: #60a5fa;
+            text-decoration: none;
+        }
+
+        .card {
+            overflow: hidden;
+
+            background: #0f172a;
+
+            border: 1px solid #1e293b;
+            border-radius: 22px;
+
+            box-shadow:
+                0 25px 60px rgba(0, 0, 0, 0.35);
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 330px;
+
+            object-fit: cover;
+
+            background: #1e293b;
+        }
+
+        .content {
+            padding: 35px;
+        }
+
+        .content h1 {
+            margin-bottom: 15px;
+
+            color: white;
+            font-size: 38px;
+        }
+
+        .description {
+            margin-bottom: 30px;
+
+            color: #94a3b8;
+
+            line-height: 1.8;
+            font-size: 16px;
+        }
+
+        .meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+
+            margin-bottom: 30px;
+        }
+
+        .badge {
+            padding: 7px 13px;
+
+            border-radius: 20px;
+
+            background: rgba(59, 130, 246, 0.10);
+            border: 1px solid rgba(59, 130, 246, 0.20);
+
+            color: #60a5fa;
+
+            font-size: 13px;
+        }
+
+        .date {
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        .actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            padding: 12px 20px;
+
+            border-radius: 10px;
+
+            text-decoration: none;
+
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .edit {
+            background: #2563eb;
+            color: white;
+        }
+
+        .delete {
+            background: #1e293b;
+            border: 1px solid #334155;
+
+            color: #f87171;
+        }
+
+        @media (max-width: 600px) {
+
+            .navbar {
+                padding: 0 20px;
+            }
+
+            .nav-links {
+                gap: 10px;
+            }
+
+            .nav-links a:not(.logout) {
+                display: none;
+            }
+
+            .container {
+                margin-top: 35px;
+            }
+
+            .content {
+                padding: 25px;
+            }
+
+            .content h1 {
+                font-size: 30px;
+            }
+
+            .hero-image {
+                height: 220px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <div class="logo">
+        Blog<span>Platform</span>
+    </div>
+
+    <div class="nav-links">
+
+        <a href="{% url 'home' %}">
+            Home
+        </a>
+
+        <a href="{% url 'category_list' %}">
+            Categories
+        </a>
+
+        {% if user.is_authenticated %}
+
+            <a href="{% url 'profile' %}">
+                Profile
+            </a>
+
+            <a href="{% url 'logout' %}" class="logout">
+                Logout
+            </a>
+
+        {% else %}
+
+            <a href="{% url 'login' %}">
+                Login
+            </a>
+
+        {% endif %}
+
+    </div>
+
+</nav>
+
+
+<main class="container">
+
+    <a
+        href="{% url 'category_list' %}"
+        class="back"
+    >
+        ← Back to Categories
+    </a>
+
+
+    <div class="card">
+
+        {% if category.image %}
+
+            <img
+                src="{{ category.image.url }}"
+                alt="{{ category.name }}"
+                class="hero-image"
+            >
+
+        {% endif %}
+
+
+        <div class="content">
+
+            <h1>
+                {{ category.name }}
+            </h1>
+
+            <p class="description">
+                {{ category.description|default:"No description available." }}
+            </p>
+
+
+            <div class="meta">
+
+                {% if category.is_active %}
+
+                    <span class="badge">
+                        Active
+                    </span>
+
+                {% else %}
+
+                    <span class="badge">
+                        Inactive
+                    </span>
+
+                {% endif %}
+
+
+                <span class="date">
+                    Created:
+                    {{ category.created_at|date:"M d, Y" }}
+                </span>
+
+            </div>
+
+
+            <div class="actions">
+
+                <a
+                    href="{% url 'category_update' category.pk %}"
+                    class="btn edit"
+                >
+                    Edit Category
+                </a>
+
+                <a
+                    href="{% url 'category_delete' category.pk %}"
+                    class="btn delete"
+                >
+                    Delete
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+</body>
+</html>

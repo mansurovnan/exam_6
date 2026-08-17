@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete {{ post.title }} | Blog Platform</title>
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: Arial, sans-serif;
+            color: #e2e8f0;
+            background: radial-gradient(circle at top left, rgba(30, 64, 175, .3), transparent 40%), #020617;
+        }
+
+        .card {
+            width: 90%;
+            max-width: 500px;
+            padding: 40px;
+            text-align: center;
+            background: #0f172a;
+            border: 1px solid #1e293b;
+            border-radius: 20px;
+        }
+
+        .icon {
+            width: 65px;
+            height: 65px;
+            margin: 0 auto 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(239, 68, 68, .1);
+            color: #f87171;
+            font-size: 30px;
+        }
+
+        h1 { margin-bottom: 12px; color: white; }
+
+        p {
+            margin-bottom: 30px;
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+
+        .title {
+            color: #f8fafc;
+            font-weight: 700;
+        }
+
+        .actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 13px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .delete {
+            border: none;
+            background: #dc2626;
+            color: white;
+        }
+
+        .delete:hover { background: #b91c1c; }
+
+        .cancel {
+            border: 1px solid #334155;
+            color: #cbd5e1;
+        }
+
+        .cancel:hover {
+            border-color: #64748b;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="card">
+
+    <div class="icon">!</div>
+
+    <h1>Delete Post?</h1>
+
+    <p>
+        Are you sure you want to delete
+        <span class="title">"{{ post.title }}"</span>?
+        This action cannot be undone.
+    </p>
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        <div class="actions">
+
+            <button type="submit" class="btn delete">
+                Yes, Delete
+            </button>
+
+            <a href="{% url 'post_detail' post.pk %}" class="btn cancel">
+                Cancel
+            </a>
+
+        </div>
+
+    </form>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit {{ post.title }} | Blog Platform</title>
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            color: #e2e8f0;
+            background: radial-gradient(circle at top left, rgba(30, 64, 175, .3), transparent 40%), #020617;
+        }
+
+        .navbar {
+            height: 75px;
+            padding: 0 7%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #020617;
+            border-bottom: 1px solid #1e293b;
+        }
+
+        .logo { color: white; font-size: 24px; font-weight: 800; }
+        .logo span { color: #3b82f6; }
+
+        .nav-links { display: flex; gap: 25px; }
+        .nav-links a { color: #94a3b8; text-decoration: none; font-size: 14px; }
+        .nav-links a:hover { color: #60a5fa; }
+
+        .container { width: 90%; max-width: 800px; margin: 55px auto; }
+
+        .back { color: #60a5fa; text-decoration: none; }
+
+        .header { margin: 25px 0 30px; }
+        .header h1 { color: white; font-size: 38px; margin-bottom: 8px; }
+        .header p { color: #64748b; }
+
+        .card {
+            padding: 35px;
+            background: #0f172a;
+            border: 1px solid #1e293b;
+            border-radius: 20px;
+        }
+
+        form p { margin-bottom: 22px; }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #cbd5e1;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        input[type="text"], textarea, select, input[type="file"] {
+            width: 100%;
+            padding: 13px;
+            background: #020617;
+            border: 1px solid #334155;
+            border-radius: 10px;
+            color: white;
+            outline: none;
+        }
+
+        textarea { min-height: 220px; resize: vertical; }
+
+        input:focus, textarea:focus, select:focus {
+            border-color: #3b82f6;
+        }
+
+        .errorlist {
+            color: #f87171;
+            list-style: none;
+            margin-bottom: 7px;
+            font-size: 13px;
+        }
+
+        .actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 14px;
+            border-radius: 10px;
+            text-align: center;
+            text-decoration: none;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .save {
+            border: none;
+            background: #2563eb;
+            color: white;
+        }
+
+        .save:hover { background: #1d4ed8; }
+
+        .cancel {
+            border: 1px solid #334155;
+            color: #cbd5e1;
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar">
+    <div class="logo">Blog<span>Platform</span></div>
+
+    <div class="nav-links">
+        <a href="{% url 'home' %}">Home</a>
+        <a href="{% url 'category_list' %}">Categories</a>
+        <a href="{% url 'post_list' %}">Posts</a>
+        <a href="{% url 'profile' %}">Profile</a>
+        <a href="{% url 'logout' %}">Logout</a>
+    </div>
+</nav>
+
+<main class="container">
+
+    <a href="{% url 'post_detail' post.pk %}" class="back">← Back to Post</a>
+
+    <div class="header">
+        <h1>Edit Post</h1>
+        <p>Update your post information.</p>
+    </div>
+
+    <div class="card">
+
+        <form method="POST" enctype="multipart/form-data">
+
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <div class="actions">
+                <button type="submit" class="btn save">Save Changes</button>
+                <a href="{% url 'post_detail' post.pk %}" class="btn cancel">Cancel</a>
+            </div>
+
+        </form>
+
+    </div>
+
+</main>
+
+</body>
+</html>

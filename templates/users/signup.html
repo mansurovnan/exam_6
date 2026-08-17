@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sign Up | Blog Platform</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background:
+                radial-gradient(circle at top left, #172554, transparent 40%),
+                radial-gradient(circle at bottom right, #1e3a8a, transparent 35%),
+                #020617;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #e2e8f0;
+            padding: 30px;
+        }
+
+        .signup-container {
+            width: 100%;
+            max-width: 480px;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .logo h1 {
+            font-size: 32px;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+
+        .logo p {
+            color: #94a3b8;
+            font-size: 14px;
+        }
+
+        .signup-card {
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid #1e3a8a;
+            border-radius: 18px;
+            padding: 35px;
+
+            box-shadow:
+                0 20px 50px rgba(0, 0, 0, 0.45),
+                0 0 30px rgba(30, 58, 138, 0.15);
+        }
+
+        .signup-card h2 {
+            font-size: 24px;
+            margin-bottom: 8px;
+            color: #ffffff;
+        }
+
+        .subtitle {
+            color: #94a3b8;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        form p {
+            margin-bottom: 18px;
+        }
+
+        form label {
+            display: block;
+            margin-bottom: 7px;
+            font-size: 14px;
+            color: #cbd5e1;
+            font-weight: 600;
+        }
+
+        form input {
+            width: 100%;
+            padding: 13px 14px;
+
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 10px;
+
+            color: #ffffff;
+            font-size: 14px;
+
+            outline: none;
+            transition: 0.2s;
+        }
+
+        form input:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+        }
+
+        .helptext {
+            display: block;
+            margin-top: 5px;
+            color: #64748b;
+            font-size: 12px;
+        }
+
+        .errorlist {
+            list-style: none;
+            color: #f87171;
+            font-size: 13px;
+            margin-bottom: 7px;
+        }
+
+        .form-errors {
+            background: rgba(127, 29, 29, 0.2);
+            border: 1px solid #7f1d1d;
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 18px;
+            color: #fca5a5;
+            font-size: 13px;
+        }
+
+        .signup-btn {
+            width: 100%;
+            padding: 14px;
+            margin-top: 8px;
+
+            border: none;
+            border-radius: 10px;
+
+            background: linear-gradient(
+                135deg,
+                #1d4ed8,
+                #2563eb
+            );
+
+            color: white;
+            font-size: 15px;
+            font-weight: 700;
+
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .signup-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.35);
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 22px;
+            font-size: 14px;
+            color: #94a3b8;
+        }
+
+        .login-link a {
+            color: #60a5fa;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="signup-container">
+
+    <div class="logo">
+        <h1>Blog Platform</h1>
+        <p>Share your ideas with the world.</p>
+    </div>
+
+    <div class="signup-card">
+
+        <h2>Create your account</h2>
+        <p class="subtitle">
+            Join our community and start publishing your own articles.
+        </p>
+
+        {% if form.non_field_errors %}
+            <div class="form-errors">
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <button type="submit" class="signup-btn">
+                Create Account
+            </button>
+        </form>
+
+        
+
+    </div>
+
+</div>
+
+</body>
+</html>

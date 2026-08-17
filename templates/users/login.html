@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login | Blog Platform</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background:
+                radial-gradient(circle at top left, #172554, transparent 40%),
+                radial-gradient(circle at bottom right, #1e3a8a, transparent 35%),
+                #020617;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            color: #e2e8f0;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 430px;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .logo h1 {
+            color: white;
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .logo span {
+            color: #3b82f6;
+        }
+
+        .logo p {
+            color: #94a3b8;
+            font-size: 14px;
+        }
+
+        .login-card {
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid #1e3a8a;
+            border-radius: 18px;
+            padding: 35px;
+
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+        }
+
+        .login-card h2 {
+            color: white;
+            font-size: 25px;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #94a3b8;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        form p {
+            margin-bottom: 18px;
+        }
+
+        form label {
+            display: block;
+            margin-bottom: 7px;
+            color: #cbd5e1;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        form input {
+            width: 100%;
+            padding: 13px 14px;
+
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 10px;
+
+            color: white;
+            outline: none;
+            font-size: 14px;
+        }
+
+        form input:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+        }
+
+        .errorlist {
+            list-style: none;
+            color: #f87171;
+            font-size: 13px;
+            margin-bottom: 7px;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            margin-top: 8px;
+
+            border: none;
+            border-radius: 10px;
+
+            background: linear-gradient(
+                135deg,
+                #1d4ed8,
+                #2563eb
+            );
+
+            color: white;
+            font-size: 15px;
+            font-weight: 700;
+
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.35);
+        }
+
+        .signup-link {
+            text-align: center;
+            margin-top: 22px;
+            color: #94a3b8;
+            font-size: 14px;
+        }
+
+        .signup-link a {
+            color: #60a5fa;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="login-container">
+
+    <div class="logo">
+        <h1>Blog<span>Platform</span></h1>
+        <p>Welcome back. Login to continue.</p>
+    </div>
+
+    <div class="login-card">
+
+        <h2>Welcome back</h2>
+
+        <p class="subtitle">
+            Enter your username and password to access your account.
+        </p>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <button type="submit" class="login-btn">
+                Login
+            </button>
+        </form>
+
+        <div class="signup-link">
+            Don't have an account?
+            <a href="{% url 'signup' %}">Create account</a>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
