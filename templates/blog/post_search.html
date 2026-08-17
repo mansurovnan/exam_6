@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Search | BlogPlatform</title>
 
     <style>
@@ -91,10 +90,6 @@
             font-size: 15px;
         }
 
-        .search-input:focus {
-            border-color: #2563eb;
-        }
-
         .search-button {
             padding: 14px 22px;
             border: none;
@@ -103,10 +98,6 @@
             color: white;
             cursor: pointer;
             font-weight: 700;
-        }
-
-        .search-button:hover {
-            background: #1d4ed8;
         }
 
         .result-title {
@@ -163,6 +154,34 @@
             color: #60a5fa;
         }
 
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 40px;
+        }
+
+        .pagination a,
+        .pagination span {
+            padding: 10px 14px;
+            border: 1px solid #334155;
+            border-radius: 9px;
+            background: #0f172a;
+            color: #94a3b8;
+            text-decoration: none;
+        }
+
+        .pagination a:hover {
+            border-color: #2563eb;
+            color: #60a5fa;
+        }
+
+        .pagination .current {
+            background: #2563eb;
+            border-color: #2563eb;
+            color: white;
+        }
+
         .empty {
             padding: 25px;
             border: 1px dashed #334155;
@@ -183,14 +202,6 @@
             .search-form {
                 flex-direction: column;
             }
-
-            .search-button {
-                width: 100%;
-            }
-
-            h1 {
-                font-size: 30px;
-            }
         }
     </style>
 </head>
@@ -204,35 +215,14 @@
     </div>
 
     <div class="nav-links">
-
-        <a href="{% url 'home' %}">
-            Home
-        </a>
-
-        <a href="{% url 'category_list' %}">
-            Categories
-        </a>
-
-        <a href="{% url 'post_list' %}">
-            Posts
-        </a>
-
-        <a href="{% url 'most_viewed' %}">
-            Most Viewed
-        </a>
-
-        <a href="{% url 'user_list' %}">
-            Users
-        </a>
-
-        <a href="{% url 'profile' %}">
-            Profile
-        </a>
-
-        <a href="{% url 'logout' %}">
-            Logout
-        </a>
-
+        <a href="{% url 'home' %}">Home</a>
+        <a href="{% url 'category_list' %}">Categories</a>
+        <a href="{% url 'post_list' %}">Posts</a>
+        <a href="{% url 'post_search' %}">Search</a>
+        <a href="{% url 'most_viewed' %}">Most Viewed</a>
+        <a href="{% url 'user_list' %}">Users</a>
+        <a href="{% url 'profile' %}">Profile</a>
+        <a href="{% url 'logout' %}">Logout</a>
     </div>
 
 </nav>
@@ -263,7 +253,6 @@
 
     </form>
 
-
     {% if query %}
 
         <p class="result-title">
@@ -273,15 +262,11 @@
 
     {% endif %}
 
-
     <div class="posts">
 
-        {% for post in posts %}
+        {% for post in page_obj %}
 
-            <a
-                href="{% url 'post_detail' post.pk %}"
-                class="post-card"
-            >
+            <a href="{% url 'post_detail' post.pk %}" class="post-card">
 
                 <div class="category">
                     {{ post.category.name }}
@@ -311,23 +296,42 @@
 
         {% empty %}
 
-            {% if query %}
-
-                <div class="empty">
-                    No posts found for "{{ query }}".
-                </div>
-
-            {% else %}
-
-                <div class="empty">
-                    Enter something to search.
-                </div>
-
-            {% endif %}
+            <div class="empty">
+                No posts found.
+            </div>
 
         {% endfor %}
 
     </div>
+
+
+    {% if page_obj.has_other_pages %}
+
+        <div class="pagination">
+
+            {% if page_obj.has_previous %}
+
+                <a href="?q={{ query }}&page={{ page_obj.previous_page_number }}">
+                    ←
+                </a>
+
+            {% endif %}
+
+            <span class="current">
+                {{ page_obj.number }}
+            </span>
+
+            {% if page_obj.has_next %}
+
+                <a href="?q={{ query }}&page={{ page_obj.next_page_number }}">
+                    →
+                </a>
+
+            {% endif %}
+
+        </div>
+
+    {% endif %}
 
 </main>
 

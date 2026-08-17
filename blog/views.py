@@ -5,6 +5,7 @@ from .models import Post, Like
 from django.http import HttpResponseForbidden
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
+from django.core.paginator import Paginator
 
 class PostListView(View):
 
@@ -148,6 +149,23 @@ class PostSearchView(View):
             Q(author__username__icontains=query)
         )
 
-        return render(request, "blog/post_search.html", {"posts": posts, "query": query})
+        paginator = Paginator(posts, 5)
+        page_number = request.GET.get("page")
+        page_obj = paginator.get_page(page_number)
+
+        return render(request, "blog/post_search.html", {
+            "page_obj": page_obj,
+            "query": query
+        })
+
+class PostListView(View):
+    def get(self, request):
+        posts = Post.objects.all().order_by("-created_at")
+
+        paginator = Paginator(posts, 5)
+        page_number = request.GET.get("page")
+        page_obj = paginator.get_page(page_number)
+
+        return render(request, "blog/post_list.html", {"page_obj": page_obj})
 
 
