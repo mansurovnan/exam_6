@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
-from .forms import PostForm, Post
+from .forms import PostForm, Post, CommentForm
 from .models import Post, Like
 from django.http import HttpResponseForbidden
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Q
 
 class PostListView(View):
 
@@ -101,5 +103,51 @@ class LikeView(View):
             Like.objects.create(user=request.user, post=post)
 
         return redirect("post_detail", pk=pk)
+
+class CommentCreateView(LoginRequiredMixin, View):
+    def post(self, request, pk):
+        post = get_object_or_404(Post, pk=pk)
+        form = CommentForm(request.POST)
+
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.author = request.user
+            comment.save()
+
+        return redirect("post_detail", pk=post.pk)
+
+class PostDetailView(View):
+    def get(self, request, pk):
+        post = get_object_or_404(Post, pk=pk)
+
+        post.views_count += 1
+        post.save()
+
+        comments = post.comments.all()
+        form = CommentForm()
+
+        return render(request, "blog/post_detail.html", {
+            "post": post,
+            "comments": comments,
+            "form": form
+        })
+
+class MostViewedPostsView(View):
+    def get(self, request):
+        posts = Post.objects.all().order_by("-views_count")[:5]
+        return render(request, "blog/most_viewed.html", {"posts": posts})
+
+class PostSearchView(View):
+    def get(self, request):
+        query = request.GET.get("q", "")
+
+        posts = Post.objects.filter(
+            Q(title__icontains=query) |
+            Q(content__icontains=query) |
+            Q(author__username__icontains=query)
+        )
+
+        return render(request, "blog/post_search.html", {"posts": posts, "query": query})
 
 

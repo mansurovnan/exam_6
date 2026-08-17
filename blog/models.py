@@ -10,6 +10,7 @@ class Post(models.Model):
     status = models.CharField(max_length=20,choices=[("draft", "Draft"),("published", "Published"),],default="draft")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    views_count = models.PositiveIntegerField(default=0)
     def __str__(self):
         return self.title
 
@@ -25,3 +26,12 @@ class Like(models.Model):
 
     class Meta:
         unique_together = ("user", "post")
+
+class Comment(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="comments")
+    author = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    body = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.author.username} - {self.post.title}"

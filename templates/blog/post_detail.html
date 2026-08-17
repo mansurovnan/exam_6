@@ -1,46 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>{{ post.title }} | Blog Platform</title>
 
     <style>
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             min-height: 100vh;
             font-family: Arial, sans-serif;
             color: #e2e8f0;
-
-            background:
-                radial-gradient(
-                    circle at top left,
-                    rgba(30, 64, 175, .3),
-                    transparent 40%
-                ),
-                #020617;
+            background: radial-gradient(circle at top left, rgba(30, 64, 175, .3), transparent 40%), #020617;
         }
-
-        /* NAVBAR */
 
         .navbar {
             height: 75px;
             padding: 0 7%;
-
             display: flex;
             align-items: center;
             justify-content: space-between;
-
             background: #020617;
             border-bottom: 1px solid #1e293b;
         }
@@ -51,9 +31,7 @@
             font-weight: 800;
         }
 
-        .logo span {
-            color: #3b82f6;
-        }
+        .logo span { color: #3b82f6; }
 
         .nav-links {
             display: flex;
@@ -67,11 +45,7 @@
             font-size: 14px;
         }
 
-        .nav-links a:hover {
-            color: #60a5fa;
-        }
-
-        /* CONTAINER */
+        .nav-links a:hover { color: #60a5fa; }
 
         .container {
             width: 90%;
@@ -86,19 +60,10 @@
             text-decoration: none;
         }
 
-        .back:hover {
-            color: #93c5fd;
-        }
-
-        /* POST CARD */
-
         .card {
             overflow: hidden;
-
             background: #0f172a;
-
             border: 1px solid #1e293b;
-
             border-radius: 22px;
         }
 
@@ -108,198 +73,208 @@
             object-fit: cover;
         }
 
-        .content {
-            padding: 40px;
-        }
+        .content { padding: 40px; }
 
         .category {
             margin-bottom: 15px;
-
             color: #60a5fa;
-
             font-size: 14px;
             font-weight: 600;
         }
 
         h1 {
             margin-bottom: 15px;
-
             color: white;
-
             font-size: 42px;
-            line-height: 1.2;
         }
 
         .meta {
             margin-bottom: 30px;
-
             color: #64748b;
-
             font-size: 14px;
         }
 
         .text {
             color: #cbd5e1;
-
             line-height: 1.9;
-
             font-size: 17px;
-
             white-space: pre-line;
         }
 
-        /* STATUS */
+        .stats {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .stat {
+            padding: 8px 13px;
+            border-radius: 20px;
+            background: rgba(59, 130, 246, .1);
+            color: #60a5fa;
+            font-size: 13px;
+        }
 
         .status {
             display: inline-block;
-
-            margin-top: 30px;
-
+            margin-top: 20px;
             padding: 6px 12px;
-
             border-radius: 20px;
-
             background: rgba(59, 130, 246, .1);
-
             color: #60a5fa;
-
             font-size: 12px;
         }
 
-        /* LIKE */
-
-        .like-section {
-            display: flex;
-
-            align-items: center;
-
-            gap: 12px;
-
-            margin-top: 30px;
-        }
-
-        .like-form {
-            margin: 0;
-        }
-
-        .like-btn {
-            padding: 10px 16px;
-
-            border: 1px solid #334155;
-
-            border-radius: 10px;
-
-            background: #1e293b;
-
-            color: #f8fafc;
-
-            font-size: 14px;
-
-            font-weight: 600;
-
-            cursor: pointer;
-
-            transition: .2s;
-        }
-
-        .like-btn:hover {
-            border-color: #ef4444;
-
-            background: #2a1b20;
-        }
-
-        .like-count {
-            color: #94a3b8;
-
-            font-size: 14px;
-        }
-
-        /* ACTIONS */
-
         .actions {
             display: flex;
-
             gap: 12px;
-
             margin-top: 35px;
         }
 
         .btn {
             padding: 12px 20px;
-
             border-radius: 10px;
-
             text-decoration: none;
-
             font-weight: 600;
-
             font-size: 14px;
         }
 
         .edit {
             background: #2563eb;
-
             color: white;
-        }
-
-        .edit:hover {
-            background: #1d4ed8;
         }
 
         .delete {
             background: #1e293b;
-
             border: 1px solid #334155;
-
             color: #f87171;
         }
 
-        .delete:hover {
-            background: #2a1b20;
+        .comments-section {
+            margin-top: 30px;
+            padding: 35px;
+            background: #0f172a;
+            border: 1px solid #1e293b;
+            border-radius: 22px;
         }
 
-        /* RESPONSIVE */
+        .comments-title {
+            margin-bottom: 25px;
+            color: white;
+            font-size: 28px;
+        }
+
+        .comment-form {
+            margin-bottom: 35px;
+        }
+
+        .comment-form textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 15px;
+            resize: vertical;
+            outline: none;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            background: #020617;
+            color: #e2e8f0;
+            font-family: Arial, sans-serif;
+            font-size: 15px;
+        }
+
+        .comment-form textarea:focus {
+            border-color: #2563eb;
+        }
+
+        .comment-btn {
+            margin-top: 12px;
+            padding: 11px 18px;
+            border: none;
+            border-radius: 10px;
+            background: #2563eb;
+            color: white;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .login-message {
+            margin-bottom: 30px;
+            padding: 15px;
+            border-radius: 10px;
+            background: #020617;
+            color: #94a3b8;
+        }
+
+        .login-message a {
+            color: #60a5fa;
+            text-decoration: none;
+        }
+
+        .comment-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .comment {
+            padding: 20px;
+            background: #020617;
+            border: 1px solid #1e293b;
+            border-radius: 14px;
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-bottom: 12px;
+        }
+
+        .comment-author {
+            color: white;
+            font-weight: 700;
+        }
+
+        .comment-date {
+            display: block;
+            margin-top: 5px;
+            color: #64748b;
+            font-size: 12px;
+        }
+
+        .comment-body {
+            color: #cbd5e1;
+            line-height: 1.6;
+        }
+
+        .comment-delete {
+            padding: 7px 12px;
+            border: 1px solid #7f1d1d;
+            border-radius: 8px;
+            background: transparent;
+            color: #f87171;
+            cursor: pointer;
+        }
+
+        .no-comments {
+            padding: 20px;
+            color: #64748b;
+            text-align: center;
+            border: 1px dashed #334155;
+            border-radius: 12px;
+        }
 
         @media (max-width: 650px) {
-
-            .navbar {
-                padding: 0 20px;
-            }
-
-            .nav-links {
-                gap: 10px;
-            }
-
-            .nav-links a:not(:last-child) {
-                display: none;
-            }
-
-            .content {
-                padding: 25px;
-            }
-
-            h1 {
-                font-size: 30px;
-            }
-
-            .actions {
-                flex-direction: column;
-            }
-
-            .btn {
-                text-align: center;
-            }
+            .navbar { padding: 0 20px; }
+            .nav-links a:not(:last-child) { display: none; }
+            .content { padding: 25px; }
+            h1 { font-size: 30px; }
         }
-
     </style>
-
 </head>
 
-
 <body>
-
-
-<!-- NAVBAR -->
 
 <nav class="navbar">
 
@@ -307,177 +282,164 @@
         Blog<span>Platform</span>
     </div>
 
-
     <div class="nav-links">
-
-        <a href="{% url 'home' %}">
-            Home
-        </a>
-
-        <a href="{% url 'category_list' %}">
-            Categories
-        </a>
-
-        <a href="{% url 'post_list' %}">
-            Posts
-        </a>
-
-        <a href="{% url 'profile' %}">
-            Profile
-        </a>
-
-        <a href="{% url 'logout' %}">
-            Logout
-        </a>
-
+        <a href="{% url 'home' %}">Home</a>
+        <a href="{% url 'category_list' %}">Categories</a>
+        <a href="{% url 'post_list' %}">Posts</a>
+        <a href="{% url 'user_list' %}">Users</a>
+        <a href="{% url 'profile' %}">Profile</a>
+        <a href="{% url 'logout' %}">Logout</a>
     </div>
 
 </nav>
 
-
-<!-- MAIN -->
-
 <main class="container">
 
-
-    <a
-        href="{% url 'post_list' %}"
-        class="back"
-    >
+    <a href="{% url 'post_list' %}" class="back">
         ← Back to Posts
     </a>
 
-
     <article class="card">
 
-
-        <!-- IMAGE -->
-
         {% if post.image %}
-
-            <img
-                src="{{ post.image.url }}"
-                alt="{{ post.title }}"
-                class="post-image"
-            >
-
+            <img src="{{ post.image.url }}" alt="{{ post.title }}" class="post-image">
         {% endif %}
-
 
         <div class="content">
 
-
-            <!-- CATEGORY -->
-
             <div class="category">
-
                 {{ post.category.name }}
-
             </div>
-
-
-            <!-- TITLE -->
 
             <h1>
-
                 {{ post.title }}
-
             </h1>
 
-
-            <!-- AUTHOR + DATE -->
-
             <div class="meta">
-
-                By {{ post.author.username }}
-
-                ·
-
-                {{ post.created_at|date:"M d, Y" }}
-
+                By {{ post.author.username }} · {{ post.created_at|date:"M d, Y" }}
             </div>
-
-
-            <!-- CONTENT -->
 
             <div class="text">
-
                 {{ post.content }}
-
             </div>
 
+            <div class="stats">
 
-            <!-- STATUS -->
-
-            <span class="status">
-
-                {{ post.get_status_display }}
-
-            </span>
-
-
-            <!-- LIKE -->
-
-            <div class="like-section">
-
-                <form
-                    method="POST"
-                    action="{% url 'post_like' post.pk %}"
-                    class="like-form"
-                >
-
-                    {% csrf_token %}
-
-                    <button
-                        type="submit"
-                        class="like-btn"
-                    >
-                        ❤️ Like
-                    </button>
-
-                </form>
-
-
-                <span class="like-count">
-
-                    {{ post.like_set.count }} likes
-
+                <span class="stat">
+                    👁 {{ post.views_count }} Views
                 </span>
 
             </div>
 
+            <span class="status">
+                {{ post.get_status_display }}
+            </span>
 
-            <!-- EDIT / DELETE -->
+            {% if post.author == user %}
 
-            <div class="actions">
+                <div class="actions">
 
-                <a
-                    href="{% url 'post_update' post.pk %}"
-                    class="btn edit"
-                >
-                    Edit Post
-                </a>
+                    <a href="{% url 'post_update' post.pk %}" class="btn edit">
+                        Edit Post
+                    </a>
 
+                    <a href="{% url 'post_delete' post.pk %}" class="btn delete">
+                        Delete
+                    </a>
 
-                <a
-                    href="{% url 'post_delete' post.pk %}"
-                    class="btn delete"
-                >
-                    Delete
-                </a>
+                </div>
 
-            </div>
-
+            {% endif %}
 
         </div>
-
 
     </article>
 
 
+    <section class="comments-section">
+
+        <h2 class="comments-title">
+            Comments
+        </h2>
+
+        {% if user.is_authenticated %}
+
+            <form method="POST" action="{% url 'comment_create' post.pk %}" class="comment-form">
+
+                {% csrf_token %}
+
+                {{ form.body }}
+
+                <button type="submit" class="comment-btn">
+                    Add Comment
+                </button>
+
+            </form>
+
+        {% else %}
+
+            <div class="login-message">
+                Please <a href="{% url 'login' %}">login</a> to write a comment.
+            </div>
+
+        {% endif %}
+
+
+        <div class="comment-list">
+
+            {% for comment in comments %}
+
+                <div class="comment">
+
+                    <div class="comment-header">
+
+                        <div>
+
+                            <div class="comment-author">
+                                {{ comment.author.username }}
+                            </div>
+
+                            <span class="comment-date">
+                                {{ comment.created_at|date:"M d, Y H:i" }}
+                            </span>
+
+                        </div>
+
+                        {% if comment.author == user %}
+
+                            <form method="POST" action="{% url 'comment_delete' comment.pk %}">
+
+                                {% csrf_token %}
+
+                                <button type="submit" class="comment-delete">
+                                    Delete
+                                </button>
+
+                            </form>
+
+                        {% endif %}
+
+                    </div>
+
+                    <p class="comment-body">
+                        {{ comment.body }}
+                    </p>
+
+                </div>
+
+            {% empty %}
+
+                <div class="no-comments">
+                    No comments yet. Be the first to comment!
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    </section>
+
 </main>
 
-
 </body>
-
 </html>

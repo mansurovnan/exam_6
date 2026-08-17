@@ -1,10 +1,10 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect, get_object_or_404
 from .models import CustomUser
 from django.views import View
 from .forms import SignUpForm, LoginForm, ProfileEditForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
-from blog.models import Post
+from blog.models import Post, Comment
 
 
 class SignUpView(View):
@@ -86,6 +86,18 @@ class UserPostsView(LoginRequiredMixin, View):
         user = CustomUser.objects.get(pk=pk)
         posts = Post.objects.filter(author=user)
         return render(request, 'users/user_posts.html', {'user': user, 'posts': posts})
+
+class CommentDeleteView(LoginRequiredMixin, View):
+    def post(self, request, pk):
+        comment = get_object_or_404(Comment, pk=pk)
+
+        if comment.author != request.user:
+            return redirect("post_detail", pk=comment.post.pk)
+
+        post_pk = comment.post.pk
+        comment.delete()
+
+        return redirect("post_detail", pk=post_pk)
     
 
 

@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Search | BlogPlatform</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            color: #e2e8f0;
+            background: radial-gradient(circle at top left, rgba(30, 64, 175, .3), transparent 40%), #020617;
+        }
+
+        .navbar {
+            height: 75px;
+            padding: 0 7%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #020617;
+            border-bottom: 1px solid #1e293b;
+        }
+
+        .logo {
+            color: white;
+            font-size: 24px;
+            font-weight: 800;
+        }
+
+        .logo span {
+            color: #3b82f6;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .nav-links a:hover {
+            color: #60a5fa;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            margin: 60px auto;
+        }
+
+        .back {
+            display: inline-block;
+            margin-bottom: 25px;
+            color: #60a5fa;
+            text-decoration: none;
+        }
+
+        h1 {
+            color: white;
+            font-size: 40px;
+            margin-bottom: 30px;
+        }
+
+        .search-form {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 40px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 14px 18px;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            outline: none;
+            background: #0f172a;
+            color: white;
+            font-size: 15px;
+        }
+
+        .search-input:focus {
+            border-color: #2563eb;
+        }
+
+        .search-button {
+            padding: 14px 22px;
+            border: none;
+            border-radius: 12px;
+            background: #2563eb;
+            color: white;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .search-button:hover {
+            background: #1d4ed8;
+        }
+
+        .result-title {
+            margin-bottom: 20px;
+            color: #94a3b8;
+        }
+
+        .posts {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .post-card {
+            display: block;
+            padding: 25px;
+            background: #0f172a;
+            border: 1px solid #1e293b;
+            border-radius: 18px;
+            text-decoration: none;
+        }
+
+        .post-card:hover {
+            border-color: #2563eb;
+        }
+
+        .category {
+            margin-bottom: 10px;
+            color: #60a5fa;
+            font-size: 13px;
+        }
+
+        .title {
+            margin-bottom: 10px;
+            color: white;
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .content {
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+
+        .meta {
+            display: flex;
+            gap: 20px;
+            margin-top: 18px;
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        .views {
+            color: #60a5fa;
+        }
+
+        .empty {
+            padding: 25px;
+            border: 1px dashed #334155;
+            border-radius: 15px;
+            color: #64748b;
+            text-align: center;
+        }
+
+        @media (max-width: 700px) {
+            .navbar {
+                padding: 0 20px;
+            }
+
+            .nav-links a:not(:last-child) {
+                display: none;
+            }
+
+            .search-form {
+                flex-direction: column;
+            }
+
+            .search-button {
+                width: 100%;
+            }
+
+            h1 {
+                font-size: 30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <div class="logo">
+        Blog<span>Platform</span>
+    </div>
+
+    <div class="nav-links">
+
+        <a href="{% url 'home' %}">
+            Home
+        </a>
+
+        <a href="{% url 'category_list' %}">
+            Categories
+        </a>
+
+        <a href="{% url 'post_list' %}">
+            Posts
+        </a>
+
+        <a href="{% url 'most_viewed' %}">
+            Most Viewed
+        </a>
+
+        <a href="{% url 'user_list' %}">
+            Users
+        </a>
+
+        <a href="{% url 'profile' %}">
+            Profile
+        </a>
+
+        <a href="{% url 'logout' %}">
+            Logout
+        </a>
+
+    </div>
+
+</nav>
+
+<main class="container">
+
+    <a href="{% url 'post_list' %}" class="back">
+        ← Back to Posts
+    </a>
+
+    <h1>
+        Search Posts
+    </h1>
+
+    <form method="GET" action="{% url 'post_search' %}" class="search-form">
+
+        <input
+            type="text"
+            name="q"
+            value="{{ query }}"
+            placeholder="Search by title, content or author..."
+            class="search-input"
+        >
+
+        <button type="submit" class="search-button">
+            Search
+        </button>
+
+    </form>
+
+
+    {% if query %}
+
+        <p class="result-title">
+            Search results for:
+            <strong>"{{ query }}"</strong>
+        </p>
+
+    {% endif %}
+
+
+    <div class="posts">
+
+        {% for post in posts %}
+
+            <a
+                href="{% url 'post_detail' post.pk %}"
+                class="post-card"
+            >
+
+                <div class="category">
+                    {{ post.category.name }}
+                </div>
+
+                <div class="title">
+                    {{ post.title }}
+                </div>
+
+                <div class="content">
+                    {{ post.content|truncatewords:30 }}
+                </div>
+
+                <div class="meta">
+
+                    <span>
+                        By {{ post.author.username }}
+                    </span>
+
+                    <span class="views">
+                        👁 {{ post.views_count }} Views
+                    </span>
+
+                </div>
+
+            </a>
+
+        {% empty %}
+
+            {% if query %}
+
+                <div class="empty">
+                    No posts found for "{{ query }}".
+                </div>
+
+            {% else %}
+
+                <div class="empty">
+                    Enter something to search.
+                </div>
+
+            {% endif %}
+
+        {% endfor %}
+
+    </div>
+
+</main>
+
+</body>
+</html>
